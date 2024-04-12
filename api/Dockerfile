@@ -1,16 +1,17 @@
-FROM node:18-alpine
+FROM node:20
 
-WORKDIR /api
+WORKDIR /usr/src/api
 
 COPY package.json .
+COPY tsconfig.json .
 
 RUN npm install\
-    && npm install -g ts-node\
-    && npm install -g typescript \
-    && npm install -g nodemon
+    && npm install -g typescript
 
 COPY . .
 
+RUN tsc
+
 EXPOSE 3001
 
-CMD [ "npm", "run", "start" ]
+CMD [ "node", "dist/index.js" ]

@@ -40,4 +40,4 @@ const pastrySchema = new Schema(
   },
 );
 
-export const userModel = mongoose.model("Pastry", pastrySchema, "pastries");
+export const PastryModel = mongoose.model("Pastry", pastrySchema, "pastries");

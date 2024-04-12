@@ -8,11 +8,10 @@ services:
     ports:
       - 3001:3001
     volumes:
-      - ./api/:/api
+      - ./api:/usr/src/app
     environment:
       - NODE_ENV=development
       - PORT=3001
-    command: npm run start
 
   app:
     build:
@@ -24,7 +23,6 @@ services:
       - ./app:/usr/src/app
     environment:
       - NODE_ENV=development
-
 
   mongo:
     image: mongo:latest

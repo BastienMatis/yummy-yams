@@ -42,4 +42,4 @@ const gameSchema = new Schema(
     },
 );
 
-export const userModel = mongoose.model("Game", gameSchema, "games");
+export const GameModel = mongoose.model("Game", gameSchema, "games");
