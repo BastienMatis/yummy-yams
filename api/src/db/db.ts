@@ -1,7 +1,7 @@
-// db.ts
 import mongoose from 'mongoose';
 
-const MONGO_URI = 'mongodb://localhost:27017';
+// mettre env
+const MONGO_URI = 'mongodb://127.0.0.1:27017/yummi-yum';
 
 mongoose.connect(MONGO_URI)
     .then(() => console.log('MongoDB connected'))
