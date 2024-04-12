@@ -2,27 +2,29 @@ version: '3.9'
 
 services:
   api:
-    build: ./api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
     ports:
       - 3001:3001
     volumes:
-      - ./api:/usr/src/app
+      - ./api/:/api
     environment:
       - NODE_ENV=development
       - PORT=3001
-    depends_on:
-      - mongo
+    command: npm run start
 
   app:
-    build: ./app
+    build:
+      context: ./app
+      dockerfile: Dockerfile
     ports:
-      - 3000:3000
+      - 5173:5173
     volumes:
       - ./app:/usr/src/app
     environment:
       - NODE_ENV=development
-    depends_on:
-      - api
+
 
   mongo:
     image: mongo:latest
