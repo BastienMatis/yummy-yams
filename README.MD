@@ -1,10 +1,16 @@
-To build containers
+To build containers :
 
 ```
 docker-compose up --build 
 ```
-For seed population
-tsx api/src/db/seed/users.seed.ts
+For seed population :
 
-For json import
-tsx api/src/pdata/import_json.ts    
+```
+tsx api/src/db/seed/users.seed.ts
+```
+
+For json import :
+
+```
+tsx api/src/pdata/import_json.ts
+```
