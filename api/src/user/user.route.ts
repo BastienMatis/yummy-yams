@@ -1,25 +1,8 @@
-// user.route.ts
 import express from 'express';
-import * as controller from "./user.controller";
+import { createUser } from "./user.controller";
 
 const router = express.Router();
 
-const routeDefinitions = {
-    "/signup": {
-        post: {
-            actions: controller.createUser,
-        },
-    },
-    "/signin": {
-        get: {
-            actions: controller.getOneUser,
-        }
-    },
-    "/:userId": {
-        delete: {
-            actions: controller.deleteUser,
-        },
-    }
-};
+router.post('/signup', createUser);
 
 export default router;

@@ -1,6 +1,5 @@
 import { UserModel } from "../models/user";
 import { UserCreate, UserDelete, UserReadOne } from "./user.types";
-import type { ClientSession } from "mongodb";
 import { type Request, type Response } from "express";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
@@ -8,7 +7,6 @@ import jwt from 'jsonwebtoken';
 export async function createUser(
     req: Request<{ userData: UserCreate }>,
     res: Response,
-    session: ClientSession,
 ): Promise<void> {
     try {
         const { userData } = req.body
@@ -49,7 +47,6 @@ async function hashedPassword(password: string): Promise<string> {
 export async function getOneUser(
     req: Request<{ userData: UserReadOne }>,
     res: Response,
-    session: ClientSession,
 ): Promise<void> {
     try {
         const { userData } = req.body
@@ -78,7 +75,6 @@ export async function getOneUser(
 export async function deleteUser(
     req: Request<{ userData: UserDelete }>,
     res: Response,
-    session: ClientSession,
 ): Promise<void> {
     try {
         const { userData } = req.body
