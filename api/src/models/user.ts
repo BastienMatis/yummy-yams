@@ -21,5 +21,7 @@ const userSchema = new Schema(
 export type UserType = InferSchemaType<typeof userSchema> & {
   _id: Types.ObjectId;
 };
+export type UserDocument = UserType & mongoose.Document;
 
 export const UserModel = mongoose.model("User", userSchema, "users");
+

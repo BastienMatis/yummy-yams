@@ -1,4 +1,4 @@
-import { UserModel, UserType } from "../models/user";
+import { UserModel } from "../models/user";
 import { UserCreate, UserDelete, UserReadOne } from "./user.types";
 import type { ClientSession } from "mongodb";
 import { type Request, type Response } from "express";
@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 export async function createUser(
     req: Request<{ userData: UserCreate }>,
     res: Response,
+    session: ClientSession,
 ): Promise<void> {
     try {
         const { userData } = req.body
@@ -22,16 +23,16 @@ export async function createUser(
             res.status(400).json({ message: 'Email already exists' });
         }
 
-        const [user] = await UserModel.create(
-            [
-                {
-                    ...userData,
+        const hashed = await hashedPassword(userData.password);
 
-                    password: hashedPassword(userData.password)
-                }
-            ],
+        const user = await UserModel.create(
+            {
+                ...userData,
+
+                password: hashed
+            }
         );
-        const token = jwt.sign({ userId: user._id }, process.env.JWT || '', {
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || '', {
             expiresIn: '1h',
         });
         res.status(201).json({ message: 'User registered successfully', token });
@@ -41,13 +42,14 @@ export async function createUser(
     }
 };
 
-async function hashedPassword(password: string) {
-    await bcrypt.hash(password, 10);
+async function hashedPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 10);
 }
 
 export async function getOneUser(
     req: Request<{ userData: UserReadOne }>,
     res: Response,
+    session: ClientSession,
 ): Promise<void> {
     try {
         const { userData } = req.body
@@ -63,41 +65,20 @@ export async function getOneUser(
             res.status(404).json({ message: 'User not found' });
         }
 
-    }
-}
-
-
-async signin(req: Request, res: Response) {
-    const { email, password } = req.body;
-    console.log(req.body)
-
-    try {
-        const user = await User.findOne({ email });
-        console.log(user);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        if (!passwordMatch) {
-            return res.status(401).json({ message: 'Invalid password' });
-        }
-
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || '', {
+        const token = jwt.sign({ userId: user?._id }, process.env.JWT_SECRET || '', {
             expiresIn: '1h',
         });
-
         res.status(200).json({ user, token });
-    } catch (error) {
-        console.error('Error registering user:', error); // Afficher l'erreur dans la console
-        res.status(500).json({ message: 'Error registering user', error }); // Envoyer l'erreur dans la réponse
+    } catch (err) {
+        console.error('Error signing in:', err);
+        res.status(500).json({ message: 'Error signing in', err });
     }
 }
 
 export async function deleteUser(
     req: Request<{ userData: UserDelete }>,
     res: Response,
+    session: ClientSession,
 ): Promise<void> {
     try {
         const { userData } = req.body
@@ -105,7 +86,7 @@ export async function deleteUser(
         const user = await UserModel.findOneAndDelete(
             {
                 _id: userData._id
-            },
+            }
         )
 
 
