@@ -8,6 +8,7 @@
 
 import express from 'express';
 import userRoutes from './user/user.route';
+import mongoose from "./db/db";
 
 const app = express();
 
