@@ -1,6 +1,8 @@
 To build containers
-docker-compose up --build 
 
+```
+docker-compose up --build 
+```
 For seed population
 tsx api/src/db/seed/users.seed.ts
 
