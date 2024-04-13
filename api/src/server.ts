@@ -1,11 +1,3 @@
-// import express from 'express'
-
-// const app = express()
-
-// app.get('/', (req, res) => res.send('Salut'))
-
-// app.listen(3001, () => console.log('app ready on :3001'))
-
 import express from 'express';
 import userRoutes from './user/user.route';
 
