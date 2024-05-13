@@ -2,14 +2,18 @@ import { UserModel } from "../models/user";
 import { UserCreate, UserDelete, UserReadOne } from "./user.types";
 import { type Request, type Response } from "express";
 import bcrypt from 'bcrypt'
+import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export async function createUser(
-    req: Request<{ userData: UserCreate }>,
+    req: Request,
     res: Response,
 ): Promise<void> {
     try {
-        const { userData } = req.body
+        const userData: UserCreate = req.body
 
         const existingUser = await UserModel.findOne(
             {
@@ -19,6 +23,7 @@ export async function createUser(
 
         if (existingUser) {
             res.status(400).json({ message: 'Email already exists' });
+            return
         }
 
         const hashed = await hashedPassword(userData.password);
@@ -49,7 +54,7 @@ export async function getOneUser(
     res: Response,
 ): Promise<void> {
     try {
-        const { userData } = req.body
+        const userData: UserReadOne = req.body
 
         const user = await UserModel.findOne(
             {
@@ -94,34 +99,3 @@ export async function deleteUser(
         console.log({ err }, "Cannot delete user")
     }
 }
-
-// export async function createUser(
-//     userData: UserCreate,
-//     session: ClientSession,
-// ): Promise<UserType> {
-//     const [user] = await UserModel.create(
-//         [
-//             {
-//                 ...userData,
-//             },
-//         ],
-//         { session, new: true },
-//     );
-
-//     return user;
-// }
-
-
-// export async function deleteUser(
-//     userData: UserDelete,
-//     session: ClientSession,
-// ): Promise<UserType | null> {
-//     const user = await UserModel.findOneAndDelete(
-//         {
-//             _id: userData
-//         },
-//         { session, new: true },
-//     )
-
-//     return user
-// }

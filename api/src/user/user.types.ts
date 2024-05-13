@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 
 export type UserCreate = {
     _id: mongoose.Types.ObjectId;
-    email: String;
-    password: String;
-    username: String;
+    email: string;
+    password: string;
+    username: string;
 };
 
 export type UserDelete = {
@@ -14,6 +14,6 @@ export type UserDelete = {
 
 export type UserReadOne = {
     _id: mongoose.Types.ObjectId;
-    email: String;
-    password: String;
+    email: string;
+    password: string;
 }

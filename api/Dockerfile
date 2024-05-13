@@ -6,12 +6,10 @@ COPY package.json .
 COPY tsconfig.json .
 
 RUN npm install\
-    && npm install -g typescript
+    && npm install -g typescript tsx
 
 COPY . .
 
-RUN tsc
-
 EXPOSE 3001
 
-CMD [ "node", "dist/index.js" ]
+CMD [ "tsx", "watch", "src/index.ts" ]

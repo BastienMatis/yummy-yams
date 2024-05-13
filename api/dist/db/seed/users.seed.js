@@ -1,12 +1,8 @@
 import { UserModel as User } from "../../models/user";
 import mongoose from "mongoose";
-
 const createUser = async () => {
     try {
-
-
         await User.deleteMany({});
-
         const users = await User.insertMany([
             {
                 email: 'don@test.com',
@@ -34,13 +30,12 @@ const createUser = async () => {
                 username: 'Camille',
             },
         ]);
-
         console.log('Users created:', users);
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error creating users:', error);
     }
 };
-
 async function seed() {
     try {
         await mongoose.connect('mongodb://localhost:27017/yummi-yams');
@@ -50,5 +45,4 @@ async function seed() {
         console.error(err);
     }
 }
-
 seed();
