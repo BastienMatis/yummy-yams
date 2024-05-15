@@ -1,5 +1,4 @@
 import React from "react";
-import styles from './../style/home.css';
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser } from "./../redux/features/User";
 
@@ -10,6 +9,11 @@ function Header() {
     function home() {
         window.location.href = '/';
     }
+
+    function userpage() {
+        window.location.href = '/userpage';
+    }
+
 
     function deconnexion() {
         localStorage.removeItem('token');
@@ -22,8 +26,8 @@ function Header() {
         <div className="home">
             {userInfo != null && (
                 <div className='nav'>
-                    <button onClick={home}>Accueil</button>
-                    <h3>Yummy Yams 🎲</h3>
+                    <button onClick={userpage}>Mon profil</button>
+                    <button onClick={home}>Yummy Yams 🎲</button>
                     <button onClick={deconnexion}>Deconnexion</button>
                 </div>
             )}

@@ -1,21 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-const gameWonSchema = new Schema(
-  {
-    user: {
-      _id: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-    },
-    victoryDate: {
-      type: Date,
-      required: true,
-    }
-  }
-)
-
 const pastrySchema = new Schema(
   {
     name: {
@@ -33,9 +17,6 @@ const pastrySchema = new Schema(
     quantityWon: {
       type: Number,
       required: true,
-    },
-    gameWon: {
-      type: [gameWonSchema],
     }
   },
 );

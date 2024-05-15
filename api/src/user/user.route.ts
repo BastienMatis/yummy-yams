@@ -1,10 +1,11 @@
 import express from 'express';
-import { createUser, getOneUser, getAllWinners } from "./user.controller";
+import { createUser, signin, getAllWinners, getOneUser } from "./user.controller";
 
 const router = express.Router();
 
 router.post('/signup', createUser);
-router.post('/signin', getOneUser);
+router.post('/signin', signin);
 router.get('/winners', getAllWinners);
+router.get('/:userId', getOneUser);
 
 export default router;

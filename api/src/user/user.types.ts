@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 export type UserCreate = {
     _id: mongoose.Types.ObjectId;
     email: string;
@@ -9,10 +8,6 @@ export type UserCreate = {
     turn: number;
     price: number
 };
-
-export type UserDelete = {
-    _id: mongoose.Types.ObjectId;
-}
 
 export type UserRead = {
     _id: mongoose.Types.ObjectId;

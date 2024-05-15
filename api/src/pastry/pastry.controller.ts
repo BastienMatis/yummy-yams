@@ -1,4 +1,4 @@
-import { PastryRead, PastryUpdate, } from "./pastry.types";
+import { PastryRead, } from "./pastry.types";
 import { type Request, type Response } from "express";
 import { PastryModel } from "../models/pastry";
 
@@ -44,35 +44,5 @@ export async function getNoPastry(
     } catch (err) {
         console.error('Error checking pastry stock:', err);
         res.status(500).json({ message: 'Error checking pastry stock', err });
-    }
-}
-
-
-export async function updatePastrie(
-    req: Request,
-    res: Response,
-): Promise<void> {
-    try {
-        const pastriesData: PastryUpdate = req.body
-
-        const pastries = await PastryModel.findOneAndUpdate(
-            {
-                name: pastriesData.name
-            },
-            {
-                $set: {
-                    stock: -1
-                }
-            }
-        )
-
-        if (!pastries) {
-            res.status(404).json({ message: 'Pastries not found' });
-        }
-
-        res.status(200).json({ pastries });
-    } catch (err) {
-        console.error('Error getting pastries:', err);
-        res.status(500).json({ message: 'Error getting pastries', err });
     }
 }

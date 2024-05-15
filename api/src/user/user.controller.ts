@@ -1,10 +1,11 @@
 import { UserModel } from "../models/user";
-import { UserCreate, UserDelete, UserRead } from "./user.types";
+import { UserCreate, UserRead } from "./user.types";
 import { type Request, type Response } from "express";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import SECRET from "./user.secret";
+import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -51,7 +52,7 @@ async function hashedPassword(password: string): Promise<string> {
     return await bcrypt.hash(password, 10);
 }
 
-export async function getOneUser(
+export async function signin(
     req: Request,
     res: Response,
 ): Promise<void> {
@@ -75,7 +76,6 @@ export async function getOneUser(
             expiresIn: '1h',
         });
 
-        console.log('erhjgf', token)
         res.status(200).json({ user: user, token: token });
     } catch (err) {
         console.error('Error signing in:', err);
@@ -108,25 +108,20 @@ export async function getAllWinners(
     }
 }
 
-export async function deleteUser(
-    req: Request<{ userData: UserDelete }>,
-    res: Response,
-): Promise<void> {
+export async function getOneUser(req: Request, res: Response): Promise<void> {
     try {
-        const { userData } = req.body
+        const userId = req.params.userId;
 
-        const user = await UserModel.findOneAndDelete(
-            {
-                _id: userData._id
-            }
-        )
-
+        const user = await UserModel.findOne({ _id: userId });
 
         if (!user) {
             res.status(404).json({ message: 'User not found' });
+            return;
         }
-        res.status(200).json({ message: "User successfully deleted" })
+
+        res.status(200).json(user);
     } catch (err) {
-        console.log({ err }, "Cannot delete user")
+        console.error('Error getting user:', err);
+        res.status(500).json({ message: 'Error getting user', err });
     }
 }

@@ -1,6 +1,4 @@
-import { GameType } from "./game.types";
 import { type Request, type Response } from "express";
-import { GameModel } from "../models/game";
 import { PastryModel } from "../models/pastry";
 import { UserModel } from "../models/user";
 import mongoose from "mongoose";
@@ -88,6 +86,13 @@ async function updateYams(
 
                 if (user) {
                     user.price += reduction;
+
+                    const newUserPrice = {
+                        pasty: { _id: pastries[index]._id },
+                        name: pastries[index].name,
+                        numberOfPastries: pastries[index].quantityWon
+                    };
+                    user.userPrice.push(newUserPrice);
                 }
                 await pastries[index].save();
             }
@@ -96,7 +101,8 @@ async function updateYams(
             await user.save();
         }
 
-        res.status(200).json({ pastries, message: 'oeee yams' });
+
+        res.status(200).json({ pastries, message: 'yams' });
     } catch (err) {
         console.error('Error updating game:', err);
         if (!res.headersSent) {
@@ -126,6 +132,13 @@ async function updateCarre(
 
                 if (user) {
                     user.price += reduction;
+
+                    const newUserPrice = {
+                        pasty: { _id: pastries[index]._id },
+                        name: pastries[index].name,
+                        numberOfPastries: pastries[index].quantityWon
+                    };
+                    user.userPrice.push(newUserPrice);
                 }
                 await pastries[index].save();
             }
@@ -134,7 +147,7 @@ async function updateCarre(
             await user.save();
         }
 
-        res.status(200).json({ pastries, message: 'oeee carre' });
+        res.status(200).json({ pastries, message: 'carre' });
     } catch (err) {
         console.error('Error updating game:', err);
         res.status(500).json({ message: 'Error updating game', err });
@@ -161,6 +174,13 @@ async function updateDouble(
 
                 if (user) {
                     user.price += reduction;
+
+                    const newUserPrice = {
+                        pasty: { _id: pastries[index]._id },
+                        name: pastries[index].name,
+                        numberOfPastries: pastries[index].quantityWon
+                    };
+                    user.userPrice.push(newUserPrice);
                 }
                 await pastries[index].save();
             }
@@ -169,7 +189,7 @@ async function updateDouble(
             await user.save();
         }
 
-        res.status(200).json({ pastries, message: 'oeee double' });
+        res.status(200).json({ pastries, message: 'double' });
     } catch (err) {
         console.error('Error updating game:', err);
         res.status(500).json({ message: 'Error updating game', err });

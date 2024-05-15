@@ -6,6 +6,7 @@ import Signup from "./views/Signup"
 import Game from "./views/Game"
 import Winner from "./views/Winner"
 import Header from "./views/Header"
+import User from "./views/User"
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/game" element={<Game />} />
           <Route path="/winners" element={<Winner />} />
+          <Route path="/userpage" element={<User />} />
         </Routes>
       </BrowserRouter>
 

@@ -9,7 +9,7 @@ function Winner() {
             .then(
                 (result) => {
                     console.log("Fetched users:", result);
-                    setUsers(result.reverse());
+                    setUsers(result).reverse();
                 }
             )
             .catch(error => {

@@ -6,9 +6,3 @@ export type PastryRead = {
     stock: number;
     quantityWon: number;
 }
-
-export type PastryUpdate = {
-    name: string;
-    stock: number;
-    quantityWon: number;
-}

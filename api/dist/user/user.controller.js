@@ -35,7 +35,7 @@ export async function createUser(req, res) {
 async function hashedPassword(password) {
     return await bcrypt.hash(password, 10);
 }
-export async function getOneUser(req, res) {
+export async function signin(req, res) {
     try {
         const userData = req.body;
         const user = await UserModel.findOne({
@@ -50,7 +50,6 @@ export async function getOneUser(req, res) {
         const token = jwt.sign({ userId: user?._id }, SECRET, {
             expiresIn: '1h',
         });
-        console.log('erhjgf', token);
         res.status(200).json({ user: user, token: token });
     }
     catch (err) {
@@ -75,18 +74,18 @@ export async function getAllWinners(req, res) {
         res.status(500).json({ message: 'Error getting winners', err });
     }
 }
-export async function deleteUser(req, res) {
+export async function getOneUser(req, res) {
     try {
-        const { userData } = req.body;
-        const user = await UserModel.findOneAndDelete({
-            _id: userData._id
-        });
+        const userId = req.params.userId;
+        const user = await UserModel.findOne({ _id: userId });
         if (!user) {
             res.status(404).json({ message: 'User not found' });
+            return;
         }
-        res.status(200).json({ message: "User successfully deleted" });
+        res.status(200).json(user);
     }
     catch (err) {
-        console.log({ err }, "Cannot delete user");
+        console.error('Error getting user:', err);
+        res.status(500).json({ message: 'Error getting user', err });
     }
 }

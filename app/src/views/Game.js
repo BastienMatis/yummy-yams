@@ -82,7 +82,7 @@ function Game() {
             {showConfetti && <Confetti />}
             {isTheGameOver ? (
                 <div className="game_over">
-                    <h1>Toutes les patisseries ont été gagnées !</h1>
+                    <h1>Le jeu est fini !</h1>
                     <div className="buttons-wrapper">
                         <button onClick={winners}>Voir les gagnants</button>
                     </div>
@@ -90,7 +90,7 @@ function Game() {
             ) : (
                 <div>
                     <div className="main">
-                        <h1>Jouer</h1>
+                        <h1>Tente ta chance 🎲</h1>
                         <div className="buttons-wrapper">
                             <button onClick={playGame}>Lancer les dés</button>
                         </div>
