@@ -6,6 +6,7 @@ function Game() {
     const [pastries, setPastries] = useState([]);
     const [isTheGameOver, setIsTheGameOver] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
+    const [isUserAction, setIsUserAction] = useState(false);
     const previousPastriesRef = useRef([]);
     const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ function Game() {
             const result = await response.json();
             console.log("Fetched pastries:", result);
 
-            if (previousPastriesRef.current.length > 0) {
+            if (previousPastriesRef.current.length > 0 && isUserAction) {
                 const hasStockChanged = result.some((pastry, index) =>
                     pastry.stock !== previousPastriesRef.current[index]?.stock
                 );
@@ -62,6 +63,7 @@ function Game() {
 
     const playGame = async (event) => {
         event.preventDefault();
+        setIsUserAction(true);
         try {
             await fetch('http://localhost:3001/games', {
                 headers: {
@@ -77,7 +79,7 @@ function Game() {
 
     return (
         <div>
-            {showConfetti && <Confetti />} {/* Display confetti if showConfetti is true */}
+            {showConfetti && <Confetti />}
             {isTheGameOver ? (
                 <div className="game_over">
                     <h1>Toutes les patisseries ont été gagnées !</h1>

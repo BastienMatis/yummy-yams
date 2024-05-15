@@ -14,3 +14,9 @@ For json import :
 ```
 tsx api/src/pdata/import_json.ts
 ```
+
+To lanch the app
+
+```
+npm start
+```
