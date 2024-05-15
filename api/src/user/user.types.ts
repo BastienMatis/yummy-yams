@@ -6,14 +6,21 @@ export type UserCreate = {
     email: string;
     password: string;
     username: string;
+    turn: number;
+    price: number
 };
 
 export type UserDelete = {
     _id: mongoose.Types.ObjectId;
 }
 
-export type UserReadOne = {
+export type UserRead = {
     _id: mongoose.Types.ObjectId;
     email: string;
     password: string;
+    price: number;
+}
+
+export type DecodedUser = {
+    userId: mongoose.Types.ObjectId;
 }

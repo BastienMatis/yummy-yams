@@ -2,10 +2,11 @@ import fs from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { PastryModel } from '../models/pastry';
-import connectDB from '../db/db';
+import mongoose from "mongoose";
 
 async function main() {
     try {
+        await mongoose.connect('mongodb://localhost:27017/yummi-yams')
         const __dirname = dirname(fileURLToPath(import.meta.url));
         const filePath = join(__dirname, "pastries_data", "pastries.json");
         const data = fs.readFileSync(filePath, 'utf8');

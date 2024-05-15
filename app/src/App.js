@@ -1,11 +1,10 @@
 import React from "react"
 import { Routes, Route, BrowserRouter } from "react-router-dom"
 import Home from "./views/Home"
-import Login from "./views/Login"
-import Register from "./views/Register"
-import YummyGame from "./views/YummyGame"
-import ChoosePastries from "./views/ChoosePastries"
-import Winners from "./views/Winners"
+import Signin from "./views/Signin"
+import Signup from "./views/Signup"
+import Game from "./views/Game"
+import Winner from "./views/Winner"
 import Header from "./views/Header"
 
 const App = () => {
@@ -15,11 +14,10 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/yummy-game" element={<YummyGame />} />
-          <Route path="/choose-pastries" element={<ChoosePastries />} />
-          <Route path="/winners" element={<Winners />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/winners" element={<Winner />} />
         </Routes>
       </BrowserRouter>
 

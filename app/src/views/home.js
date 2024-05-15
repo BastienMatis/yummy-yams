@@ -1,96 +1,86 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
-import styles from './../css/home.module.css';
+import './../style/home.css';
 
 function Home() {
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
-
-    function register() {
-        navigate('/register')
+    function signin() {
+        navigate('/signin');
     }
 
-    function login() {
-        navigate('/login')
+    function signup() {
+        navigate('/signup');
     }
 
-    function play() {
-        navigate('/yummy-game')
+    function game() {
+        navigate('/game');
     }
 
-    function seeWinners() {
-        navigate('/winners')
+    function winners() {
+        navigate('/winners');
     }
 
-    const [pictures, setPictures] = useState([])
-    const [isTheGameOver, setIsTheGameOver] = useState()
-    const [isUserConnected, setIsUserConnected] = useState()
+    const [isTheGameOver, setIsTheGameOver] = useState(false);
+    const [isUserConnected, setIsUserConnected] = useState(false);
 
     useEffect(() => {
-        fetch("http://localhost:3001/pastries-img")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setPictures(result);
-                }
-            )
+        const checkPastries = async () => {
+            await fetchEmptyPastry();
+        };
 
-        fetch("http://localhost:3001/pastries-left")
-            .then(res => res.json())
-            .then(
-                (pastriesLeft) => {
-                    if (pastriesLeft > 0) {
-                        setIsTheGameOver(false)
-                    } else {
-                        setIsTheGameOver(true)
-                    }
-                }
-            )
+        checkPastries();
 
         if (localStorage.hasOwnProperty('token')) {
-            setIsUserConnected(true)
+            setIsUserConnected(true);
         } else {
-            setIsUserConnected(false)
+            setIsUserConnected(false);
         }
-
     }, []);
 
+    const fetchEmptyPastry = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/pastries/empty");
+            const result = await response.json();
+            console.log("Fetched pastries:", result);
+            if (result.allOutOfStock) {
+                setIsTheGameOver(true);
+            } else {
+                setIsTheGameOver(false);
+            }
+        } catch (error) {
+            console.error("Error fetching pastries:", error);
+        }
+    };
 
     return (
         <div>
             {isTheGameOver ? (
-                <div className={styles.game_over}>
-                    <h1>The game is over 🥲</h1>
-
-                    <button onClick={seeWinners}>See winners</button>
+                <div className="game_over">
+                    <h1>Toutes les patisseries ont été gagnées !</h1>
+                    <div className="buttons-wrapper">
+                        <button onClick={winners}>Voir les gagnants</button>
+                    </div>
                 </div>
             ) : (
-                <div className={styles.main}>
+                <div className="main">
                     <h1>Yummy Yams</h1>
                     <p>Joue et tente de gagner des pâtisseries !</p>
                     {isUserConnected ? (
-                        <div className={styles.buttons}>
-                            <button onClick={play}>Jouer</button>
-                        </div>
-                    ) : (
-                        <div className={styles.connexion}>
-                            <p>Pour jouer, connecte-toi 🚀</p>
-                            <div className={styles.buttons}>
-                                <button onClick={register}>Créer un compte</button>
-                                <button onClick={login}>Se connecter</button>
+                        <div className="buttons-wrapper">
+                            <div className="buttons">
+                                <button onClick={game}>Jouer</button>
                             </div>
                         </div>
-
-                    )}
-                    <div className={styles.winners}>
-                        <p>Voir les gagnants : </p>
-                        <button onClick={seeWinners}>⭐</button>
-                    </div>
-                    {pictures.length > 0 && (
-                        <div className={styles.img_caroussel}>
-                            {pictures.map((item) => (
-                                <img key={item} src={`/images/pastries/${item}`} alt={item} />
-                            ))}
+                    ) : (
+                        <div className="connexion">
+                            <p>Connecte toi ou créer un compte !</p>
+                            <div className="buttons-wrapper">
+                                <div className="buttons">
+                                    <button onClick={signup}>Créer un compte</button>
+                                    <button onClick={signin}>Se connecter</button>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>

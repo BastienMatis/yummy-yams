@@ -1,5 +1,4 @@
 import mongoose, { InferSchemaType, Schema, Types } from "mongoose";
-
 const userSchema = new Schema(
   {
 
@@ -15,7 +14,16 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    turn: {
+      type: Number,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true
+    }
   },
+  { timestamps: true, }
 );
 
 export type UserType = InferSchemaType<typeof userSchema> & {

@@ -1,12 +1,17 @@
 import express from 'express';
 import userRoutes from './user/user.route';
+import pastryRoutes from './pastry/pastry.route'
+import gameRoutes from './game/game.route'
 import connectDB from "./db/db";
+import cors from "cors"
 
 const app = express();
 
-app.get('/', (req, res) => res.send('Salut'));
 app.use(express.json());
+app.use(cors())
 app.use('/users', userRoutes);
+app.use('/pastries', pastryRoutes);
+app.use('/games', gameRoutes);
 
 connectDB().then(() => {
     app.listen(3001, () => {

@@ -12,26 +12,36 @@ const createUser = async () => {
                 email: 'don@test.com',
                 password: '1234',
                 username: 'Donny',
+                turn: 99999999999,
+                price: 0,
             },
             {
                 email: 'ok@test.com',
                 password: '1234',
                 username: 'OK',
+                turn: 3,
+                price: 0,
             },
             {
                 email: 'alice@test.com',
                 password: '1234',
                 username: 'Alice',
+                turn: 3,
+                price: 0,
             },
             {
                 email: 'matthieu@test.com',
                 password: '1234',
                 username: 'Matthieu',
+                turn: 3,
+                price: 0,
             },
             {
                 email: 'camille@test.com',
                 password: '1234',
                 username: 'Camille',
+                turn: 3,
+                price: 0,
             },
         ]);
 

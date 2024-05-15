@@ -1,10 +1,10 @@
 import { UserModel } from "../models/user";
-import { UserCreate, UserDelete, UserReadOne } from "./user.types";
+import { UserCreate, UserDelete, UserRead } from "./user.types";
 import { type Request, type Response } from "express";
 import bcrypt from 'bcrypt'
-import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import SECRET from "./user.secret";
 
 dotenv.config();
 
@@ -32,10 +32,12 @@ export async function createUser(
             {
                 ...userData,
 
-                password: hashed
+                password: hashed,
+                turn: 3,
+                price: 0
             }
         );
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || '', {
+        const token = jwt.sign({ userId: user._id }, SECRET, {
             expiresIn: '1h',
         });
         res.status(201).json({ message: 'User registered successfully', token });
@@ -50,30 +52,59 @@ async function hashedPassword(password: string): Promise<string> {
 }
 
 export async function getOneUser(
-    req: Request<{ userData: UserReadOne }>,
+    req: Request,
     res: Response,
 ): Promise<void> {
     try {
-        const userData: UserReadOne = req.body
+        const userData: UserRead = req.body
 
         const user = await UserModel.findOne(
             {
                 email: userData.email,
-                password: userData.password
             }
         )
 
-        if (!user) {
-            res.status(404).json({ message: 'User not found' });
+        if (user) {
+            const passwordMatch = await bcrypt.compare(userData.password, user.password);
+            if (!passwordMatch) {
+                res.status(401).json({ message: 'Invalid password' });
+            }
         }
 
-        const token = jwt.sign({ userId: user?._id }, process.env.JWT_SECRET || '', {
+        const token = jwt.sign({ userId: user?._id }, SECRET, {
             expiresIn: '1h',
         });
-        res.status(200).json({ user, token });
+
+        console.log('erhjgf', token)
+        res.status(200).json({ user: user, token: token });
     } catch (err) {
         console.error('Error signing in:', err);
         res.status(500).json({ message: 'Error signing in', err });
+    }
+}
+
+export async function getAllWinners(
+    req: Request,
+    res: Response,
+): Promise<void> {
+    try {
+        const userData: UserRead = req.body
+
+        const users = await UserModel.find(
+            {
+                ...userData,
+                price: { $gt: 0 }
+            }
+        )
+
+        if (!users) {
+            res.status(404).json({ message: 'Winners not found' });
+        }
+
+        res.status(200).json(users);
+    } catch (err) {
+        console.error('Error getting winners:', err);
+        res.status(500).json({ message: 'Error getting winners', err });
     }
 }
 

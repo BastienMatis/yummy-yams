@@ -1,0 +1,146 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #ffd700;
+    text-align: center;
+    text-shadow: 2px 2px 5px #ff4500;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 1rem;
+    color: #ffd700;
+    text-align: center;
+    text-shadow: 2px 2px 5px #ff4500;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.5rem;
+    color: #ffa500;
+    text-align: center;
+    margin: 0 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #ff4500;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 0 10px #ffd700, 0 0 20px #ff4500, 0 0 30px #ff4500;
+    margin: 10px;
+}
+
+button:hover {
+    background-color: #ff6347;
+    transform: scale(1.1);
+}
+
+a {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #ff4500;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 0 10px #ffd700, 0 0 20px #ff4500, 0 0 30px #ff4500;
+    margin: 10px;
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #ff6347;
+    transform: scale(1.1);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.game_over {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #fff;
+    text-shadow: 2px 2px 5px #000;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #1a1a1a;
+    color: #fff;
+    text-shadow: 2px 2px 5px #000;
+}
+
+.connexion {
+    text-align: center;
+}
+
+.buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.buttons button {
+    margin: 10px;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.nav button {
+    padding: 5px 10px;
+}
