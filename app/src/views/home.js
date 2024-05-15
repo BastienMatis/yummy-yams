@@ -64,8 +64,8 @@ function Home() {
                 </div>
             ) : (
                 <div className="main">
-                    <h1>Yummy Yams</h1>
-                    <p>Joue et tente de gagner des pâtisseries !</p>
+                    <h1>Yummy Yams 🎲</h1>
+                    <p>Des patisseries à gagner !</p>
                     {isUserConnected ? (
                         <div className="buttons-wrapper">
                             <div className="buttons">
